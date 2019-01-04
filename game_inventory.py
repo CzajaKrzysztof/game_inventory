@@ -3,17 +3,21 @@
 # Write code in the functions (and create new functions) so that they work
 # according to the specification.
 
+def get_total_items_count(inventory):
+    total_items = 0
+    for i in inventory:
+      total_items += inventory[i]
+    
+    return total_items
+
 
 def display_inventory(inventory):
     '''Display the inventory.'''
-    total_items = 0
     print("Inventory:")
     for i in inventory:
-      total_items += inventory[i]
       print("{0} {1}".format(inventory[i], i))
     
-    print("Total number of items: {0}". format(total_items))
-    
+    print("Total number of items: {0}". format(get_total_items_count(inventory)))    
 
 
 def add_to_inventory(inventory, added_items):
@@ -24,6 +28,43 @@ def add_to_inventory(inventory, added_items):
       elif i not in inventory:
         inventory[i] = 1
     return inventory  
+
+def get_max_key_length(inventory_keys):
+    """
+    Determinates longest key from inventory_keys and return in as int
+    """
+    max_key_length = 0
+    for i in inventory_keys:
+      if len(i) > max_key_length:
+        max_key_length = len(i)
+    
+    return max_key_length
+
+
+def get_max_value_length(inventory_values):
+    """
+    Determinates longest value from inventory_values and return in as int
+    """
+    max_values_length = 0
+    for i in inventory_values:
+      if len(str(i)) > max_values_length:
+        max_values_length = len(str(i))
+    
+    return max_values_length
+
+
+def get_sorted_inventory(inventory, order):
+    """
+    Sorts inventory by given order. Return ordered list of tuples.
+    """
+    if order == "count,asc":
+      inventory_sorted = sorted(list(inventory.items()), key=lambda item: item[1])
+    elif order == "count,desc":
+      inventory_sorted = list(reversed(sorted(list(inventory.items()), key=lambda item: item[1])))
+    elif order == None:
+      inventory_sorted = list(inventory.items())
+      
+    return inventory_sorted
 
 
 def print_table(inventory, order=None):
@@ -37,8 +78,17 @@ def print_table(inventory, order=None):
       inventory) in descending order
     - "count,asc" means the table is ordered by count in ascending order
     '''
+    max_key_length = get_max_key_length(inventory.keys())
+    max_value_length = get_max_value_length(inventory.values())
+    sorted_inventory = get_sorted_inventory(inventory, order)
 
-    pass
+    print("Inventory:\n")
+    print("{0:>{width_c}}{1:>{width_i}}".format("Count", "item name", width_c = max_value_length + 4, width_i = max_key_length + 3))
+    print("-" * (max_key_length + max_value_length + 7))
+    for i in sorted_inventory:
+      print("{0:>{width_c}}{1:>{width_i}}".format(i[1], i[0], width_c = max_value_length + 4, width_i = max_key_length + 3))
+    print("-" * (max_key_length + max_value_length + 7))
+    print("Total number of items: {0}".format(get_total_items_count(inventory)))
 
 
 def import_inventory(inventory, filename="import_inventory.csv"):
@@ -70,7 +120,11 @@ def export_inventory(inventory, filename="export_inventory.csv"):
 print("Step 1")
 inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
 display_inventory(inv)
+
 print("\n\nStep 2")
 dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
 inv = add_to_inventory(inv, dragon_loot)
 display_inventory(inv)
+
+print("\n\nStep 3")
+print_table(inv,"count,asc")
