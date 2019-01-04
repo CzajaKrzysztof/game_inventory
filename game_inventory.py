@@ -6,7 +6,14 @@
 
 def display_inventory(inventory):
     '''Display the inventory.'''
-    pass
+    total_items = 0
+    print("Inventory:")
+    for i in inventory:
+      total_items += inventory[i]
+      print("{0} {1}".format(inventory[i], i))
+    
+    print("Total number of items: {0}". format(total_items))
+    
 
 
 def add_to_inventory(inventory, added_items):
@@ -53,3 +60,6 @@ def export_inventory(inventory, filename="export_inventory.csv"):
     '''
 
     pass
+
+inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+display_inventory(inv)
