@@ -33,17 +33,7 @@ def add_to_inventory(inventory, added_items):
     return inventory
 
 
-def get_max_key_length(inventory_keys):
-    """Determinates longest key from inventory_keys and return in as int"""
-    max_key_length = 0
-    for i in inventory_keys:
-        if len(i) > max_key_length:
-                max_key_length = len(i)
-
-    return max_key_length
-
-
-def get_max_value_length(inventory_values):
+def get_max_column_length(inventory_values):
     """Determinates longest value from inventory_values and return in as int"""
     max_values_length = 0
     for i in inventory_values:
@@ -78,8 +68,8 @@ def print_table(inventory, order=None):
       inventory) in descending order
     - "count,asc" means the table is ordered by count in ascending order
     '''
-    max_key_length = get_max_key_length(inventory.keys())
-    max_value_length = get_max_value_length(inventory.values())
+    max_value_length = get_max_column_length(inventory.values())
+    max_key_length = get_max_column_length(inventory.keys())
     sorted_inventory = get_sorted_inventory(inventory, order)
 
     print("Inventory:\n")
@@ -129,3 +119,8 @@ def export_inventory(inventory, filename="export_inventory.csv"):
     export_items_string = ",".join(export_items)
     with open(filename, "w") as export_file:
         export_file.write(export_items_string)
+
+inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+print_table(inv, "count,desc" )
+print_table(inv, "count,asc" )
+print_table(inv)
