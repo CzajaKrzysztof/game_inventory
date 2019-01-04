@@ -18,7 +18,12 @@ def display_inventory(inventory):
 
 def add_to_inventory(inventory, added_items):
     '''Add to the inventory dictionary a list of items from added_items.'''
-    pass
+    for i in added_items:
+      if i in inventory:
+        inventory[i] +=1
+      elif i not in inventory:
+        inventory[i] = 1
+    return inventory  
 
 
 def print_table(inventory, order=None):
@@ -61,5 +66,11 @@ def export_inventory(inventory, filename="export_inventory.csv"):
 
     pass
 
+
+print("Step 1")
 inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+display_inventory(inv)
+print("\n\nStep 2")
+dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
+inv = add_to_inventory(inv, dragon_loot)
 display_inventory(inv)
