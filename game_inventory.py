@@ -4,6 +4,7 @@
 # according to the specification.
 
 def get_total_items_count(inventory):
+    """Caounts total number of items in inventory and terurn it as int."""
     total_items = 0
     for i in inventory:
       total_items += inventory[i]
@@ -30,9 +31,7 @@ def add_to_inventory(inventory, added_items):
     return inventory  
 
 def get_max_key_length(inventory_keys):
-    """
-    Determinates longest key from inventory_keys and return in as int
-    """
+    """Determinates longest key from inventory_keys and return in as int"""
     max_key_length = 0
     for i in inventory_keys:
       if len(i) > max_key_length:
@@ -42,9 +41,7 @@ def get_max_key_length(inventory_keys):
 
 
 def get_max_value_length(inventory_values):
-    """
-    Determinates longest value from inventory_values and return in as int
-    """
+    """Determinates longest value from inventory_values and return in as int"""
     max_values_length = 0
     for i in inventory_values:
       if len(str(i)) > max_values_length:
@@ -54,9 +51,7 @@ def get_max_value_length(inventory_values):
 
 
 def get_sorted_inventory(inventory, order):
-    """
-    Sorts inventory by given order. Return ordered list of tuples.
-    """
+    """Sorts inventory by given order. Return ordered list of tuples."""
     if order == "count,asc":
       inventory_sorted = sorted(list(inventory.items()), key=lambda item: item[1])
     elif order == "count,desc":
@@ -100,8 +95,11 @@ def import_inventory(inventory, filename="import_inventory.csv"):
 
     The file format is plain text with comma separated values (CSV).
     '''
+    with open(filename, "r") as import_file:
+      imported_items = import_file.read().split(",")
 
-    pass
+    inventory = add_to_inventory(inventory, imported_items)
+    print_table(inventory, "count,desc")
 
 
 def export_inventory(inventory, filename="export_inventory.csv"):
@@ -117,14 +115,17 @@ def export_inventory(inventory, filename="export_inventory.csv"):
     pass
 
 
-print("Step 1")
+#print("Step 1")
 inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
-display_inventory(inv)
+#display_inventory(inv)
 
-print("\n\nStep 2")
+#print("\n\nStep 2")
 dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
 inv = add_to_inventory(inv, dragon_loot)
-display_inventory(inv)
+#display_inventory(inv)
 
-print("\n\nStep 3")
-print_table(inv,"count,asc")
+#print("\n\nStep 3")
+#print_table(inv,"count,desc")
+
+#print("\n\nStep 4")
+import_inventory(inv, "test_inventory.csv")
