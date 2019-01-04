@@ -111,8 +111,14 @@ def export_inventory(inventory, filename="export_inventory.csv"):
 
     The file format is plain text with comma separated values (CSV).
     '''
-
-    pass
+    export_items = []
+    for i in inventory:
+      for j in range(inventory[i]):
+        export_items.append(i)
+        
+    export_items_string = ",".join(export_items)
+    with open(filename, "w") as export_file:
+      export_file.write(export_items_string)
 
 
 #print("Step 1")
@@ -120,12 +126,15 @@ inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
 #display_inventory(inv)
 
 #print("\n\nStep 2")
-dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
-inv = add_to_inventory(inv, dragon_loot)
+# dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
+# inv = add_to_inventory(inv, dragon_loot)
 #display_inventory(inv)
 
 #print("\n\nStep 3")
 #print_table(inv,"count,desc")
 
 #print("\n\nStep 4")
-import_inventory(inv, "test_inventory.csv")
+#import_inventory(inv, "test_inventory.csv")
+
+#print("\n\nStep 5")
+export_inventory(inv)
